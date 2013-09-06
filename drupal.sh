@@ -14,7 +14,19 @@ if [ -d ${web}drupal-${ver} ]; then
   exit 1
 fi
 
-cd $tmp
+if [ -d ${tmp} ]; then
+  cd ${tmp}
+else 
+  mkdir ${tmp}
+  if [ ?$ -ne 0 ]; then
+    # Is bailing here the right thing to do? 
+    # Need to automate a solution for /var/tmp or something
+    echo Unable to use the temp directory
+    echo Please manually create & re-run
+    exit 1
+  fi
+fi
+
 wget http://ftp.drupal.org/files/projects/drupal-${ver}.tar.gz
 tar -zxvf drupal-${ver}.tar.gz
 if [ $? -ne 0 ]; then
